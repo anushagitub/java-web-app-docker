@@ -1,0 +1,12 @@
+FROM centos:7
+RUN  yum install wget -y
+RUN yum install java-11-openjdk.x86_64 -y
+RUN wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+RUN rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+RUN yum install jenkins -y
+RUN yum install /usr/sbin/service -y
+EXPOSE 8080
+RUN yum install sudo -y
+RUN echo "jenkins ALL=(ALL) NOPASWD: ALL" >> /etc/sudoers
+RUN yum install iptables -y
+ENTRYPOINT service jenkins restart && bash
